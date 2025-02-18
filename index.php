@@ -14,6 +14,29 @@ define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 
 
+// uri('admin/category', 'Category', 'index');
+// uri('admin/category/store', 'Category', 'store', 'POST');
+function uri($reservedUrl, $class, $method, $requestMethod = 'GET')
+{
+
+    //current url array
+    $currentUrl = explode('?', currentUrl())[0];
+    $currentUrl = str_replace(CURRENT_DOMAIN, '', $currentUrl);
+    $currentUrl = trim($currentUrl, '/');
+    $currentUrlArray = explode('/', $currentUrl);
+    $currentUrlArray = array_filter($currentUrlArray);
+
+    //reserved Url array
+    $reservedUrl = trim($reservedUrl, '/');
+    $reservedUrlArray = explode('/', $reservedUrl);
+    $reservedUrlArray = array_filter($reservedUrlArray);
+
+
+
+}
+uri('admin/category', 'Category', 'index');
+
+
 //helpers
 
 function protocol() {
@@ -95,3 +118,14 @@ function flash($name, $value = null)
 // flash('cart_success', 'محصول با موفقیت به سبد خرید شما اضافه شد');
 // echo flash('login_error');
 // echo flash('cart_success');
+
+
+function dd($var){
+    echo '<pre>';
+    var_dump($var);
+    exit;
+}
+
+
+// uri('admin/category', 'Category', 'index');
+// uri('admin/category/store', 'Category', 'store', 'POST');
