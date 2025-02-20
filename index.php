@@ -158,6 +158,10 @@ function dd($var){
     exit;
 }
 
+//Category
+
 
 // uri('admin/category', 'Category', 'index');
 // uri('admin/category/store', 'Category', 'store', 'POST');
+
+echo '404 not found';
