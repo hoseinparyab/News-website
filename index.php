@@ -1,8 +1,9 @@
 <?php
 
 //session start
-session_start();
+use database\Database;
 
+session_start();
 
 //config
 define('BASE_PATH', __DIR__);
@@ -13,6 +14,8 @@ define('DB_NAME', 'project');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 
+require_once 'database/DataBase.php';
+$db = new Database ;
 
 // uri('admin/category', 'Category', 'index');
 // uri('admin/category/store', 'Category', 'store', 'POST');
