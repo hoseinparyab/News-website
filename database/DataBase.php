@@ -5,7 +5,7 @@ namespace database;
 use PDO;
 use PDOException;
 
-class Database{
+class DataBase{
 
     private $connection;
     private $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
@@ -19,7 +19,6 @@ class Database{
         try
         {
             $this->connection = new PDO("mysql:host=" . $this->dbHost. ";dbname=" . $this->dbName, $this->dbUserName, $this->dbPassword, $this->options);
-            echo 'ok';
         }
         catch(PDOException $e){
             echo $e->getMessage();

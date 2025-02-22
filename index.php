@@ -15,7 +15,15 @@ define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 
 require_once 'database/DataBase.php';
-$db = new Database ;
+require_once 'database/CreateDB.php';
+require_once 'activities/Admin/Admin.php';
+require_once 'activities/Admin/Category.php';
+// $db = new database\Database();
+// $db = new database\CreateDB();
+// $db->run();
+
+
+
 
 // uri('admin/category', 'Category', 'index');
 // uri('admin/category/store', 'Category', 'store', 'POST');
@@ -66,7 +74,7 @@ function uri($reservedUrl, $class, $method, $requestMethod = 'GET')
 // admin/category/delete/{id} reserved url
 // admin/category/edit/5 current url
 // admin/category/edit/5 current url
-uri('admin/category', 'Category', 'index');
+// uri('admin/category', 'Category', 'index');
 
 
 //helpers
@@ -158,10 +166,18 @@ function dd($var){
     exit;
 }
 
-//Category
 
 
-// uri('admin/category', 'Category', 'index');
-// uri('admin/category/store', 'Category', 'store', 'POST');
 
-echo '404 not found';
+
+// category
+
+uri('admin/category', 'Admin\Category', 'index');
+uri('admin/category/create', 'Admin\Category', 'create');
+uri('admin/category/store', 'Admin\Category', 'store', 'POST');
+uri('admin/category/edit/{id}', 'Admin\Category', 'edit');
+uri('admin/category/update/{id}', 'Admin\Category', 'update', 'POST');
+uri('admin/category/destroy/{id}', 'Admin\Category', 'destroy');
+
+
+echo '404 - page not found';
