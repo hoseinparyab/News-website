@@ -18,6 +18,7 @@ require_once 'database/DataBase.php';
 require_once 'database/CreateDB.php';
 require_once 'activities/Admin/Admin.php';
 require_once 'activities/Admin/Category.php';
+require_once 'activities/Admin/Post.php';
 // $db = new database\Database();
 // $db = new database\CreateDB();
 // $db->run();
@@ -178,6 +179,15 @@ uri('admin/category/store', 'Admin\Category', 'store', 'POST');
 uri('admin/category/edit/{id}', 'Admin\Category', 'edit');
 uri('admin/category/update/{id}', 'Admin\Category', 'update', 'POST');
 uri('admin/category/destroy/{id}', 'Admin\Category', 'destroy');
+
+// post
+
+uri('admin/post', 'Admin\Post', 'index');
+uri('admin/post/create', 'Admin\Post', 'create');
+uri('admin/post/store', 'Admin\Post', 'store', 'POST');
+uri('admin/post/edit/{id}', 'Admin\Post', 'edit');
+uri('admin/post/update/{id}', 'Admin\Post', 'update', 'POST');
+uri('admin/post/destroy/{id}', 'Admin\Post', 'destroy');
 
 
 echo '404 - page not found';
