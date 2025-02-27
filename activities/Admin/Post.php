@@ -17,7 +17,8 @@ class Post extends Admin
 
     public function create()
     {
-        require_once(BASE_PATH . '/template/admin/categories/create.php');
+//        dd('h1');
+        require_once(BASE_PATH . '/template/admin/posts/create.php');
 
     }
 
