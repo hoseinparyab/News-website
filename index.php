@@ -19,6 +19,8 @@ require_once 'database/CreateDB.php';
 require_once 'activities/Admin/Admin.php';
 require_once 'activities/Admin/Category.php';
 require_once 'activities/Admin/Post.php';
+require_once 'activities/Admin/Banner.php';
+
 // $db = new database\Database();
 // $db = new database\CreateDB();
 // $db->run();
@@ -191,5 +193,15 @@ uri('admin/post/delete/{id}', 'Admin\Post', 'delete');
 uri('admin/post/selected/{id}', 'Admin\Post', 'selected');
 uri('admin/post/breaking-news/{id}', 'Admin\Post', 'breakingNews');
 
+
+
+// Banner
+
+uri('admin/banner', 'Admin\Banner', 'index');
+uri('admin/banner/create', 'Admin\Banner', 'create');
+uri('admin/banner/store', 'Admin\Banner', 'store', 'POST');
+uri('admin/banner/edit/{id}', 'Admin\Banner', 'edit');
+uri('admin/banner/update/{id}', 'Admin\Banner', 'update', 'POST');
+uri('admin/banner/delete/{id}', 'Admin\Banner', 'delete');
 
 echo '404 - page not found';
