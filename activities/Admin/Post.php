@@ -9,7 +9,7 @@ class Post extends Admin{
     public function index()
     {
         $db = new DataBase();
-        $posts = $db->select('SELECT * FROM posts ORDER BY `id` DESC');
+        $posts = $db->select('SELECT posts.*, categories.name AS category_name, users.email AS email FROM posts LEFT JOIN categories ON posts.cat_id = categories.id LEFT JOIN users ON posts.user_id = users.id ORDER BY `id` DESC');
         require_once(BASE_PATH . '/template/admin/posts/index.php');
     }
 
@@ -23,6 +23,7 @@ class Post extends Admin{
 
     public function store($request)
     {
+        date_default_timezone_set('Iran');
         $realTimestampt = substr($request['published_at'], 0, 10);
         $request['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampt);
         $db = new DataBase();
@@ -54,6 +55,7 @@ class Post extends Admin{
 
     public function update($request, $id)
     {
+        date_default_timezone_set('Iran');
         $realTimestampt = substr($request['published_at'], 0, 10);
         $request['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampt);
         $db = new DataBase();

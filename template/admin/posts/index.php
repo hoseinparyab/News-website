@@ -50,19 +50,21 @@ require_once(BASE_PATH . '/template/admin/layouts/header.php');
 
                     </td>
                     <td>
-                        <?= $post['user_id'] ?>
+                        <?= $post['email'] ?>
                     </td>
                     <td>
-                        <?= $post['cat_id'] ?>
+                        <?= $post['category_name'] ?>
                     </td>
-                    <td><img style="width: 80px;" src="<?= asset($post['image']) ?>" alt=""></td>
+                    <td>
+                        <img style="width: 80px;" src="<?= asset($post['image']) ?>" alt="">
+                    </td>
                     <td style="width: 25rem;">
                         <a role="button" class="btn btn-sm btn-warning  text-dark" href="<?= url('admin/post/breaking-news/' . $post['id']) ?>">
                             <?= $post['breaking_news'] == 1 ? 'remove breaking news'  : 'add breaking news' ?>
 
                         </a>
                         <a role="button" class="btn btn-sm btn-warning text-dark" href="<?= url('admin/post/selected/' . $post['id']) ?>">
-                            <?= $post['selected'] == 1 ? 'remove selected '  : 'add selected' ?>
+                            <?= $post['selected'] == 1 ? 'remove selcted '  : 'add selected' ?>
 
                         </a>
                         <hr class="my-1" />

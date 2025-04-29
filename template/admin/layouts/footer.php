@@ -24,6 +24,9 @@
                     enabled: true
                 }
             },
+            timePicker: {
+                enabled: true,
+            },
             observer : true,
             altField: '#published_at'
 
