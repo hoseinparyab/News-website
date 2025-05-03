@@ -22,15 +22,19 @@ require_once 'activities/Admin/Post.php';
 require_once 'activities/Admin/Banner.php';
 require_once 'activities/Admin/User.php';
 
-// $db = new database\Database();
-// $db = new database\CreateDB();
-// $db->run();
 
 
+spl_autoload_register(function($className){
+    $path = BASE_PATH . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR;
+    $className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
+    include $path . $className . '.php';
+});
 
 
-// uri('admin/category', 'Category', 'index');
-// uri('admin/category/store', 'Category', 'store', 'POST');
+function jalaliData($date){
+    return \Parsidev\Jalali\jdate::forge($date)->format('datetime');
+}
+// echo jalaliData('today');
 function uri($reservedUrl, $class, $method, $requestMethod = 'GET')
 {
 

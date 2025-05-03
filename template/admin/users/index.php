@@ -30,7 +30,7 @@
                     <td><?= $user['username'] ?></td>
                     <td><?= $user['email'] ?></td>
                     <td><?= $user['permission'] ?></td>
-                    <td><?= $user['created_at'] ?></td>
+                    <td><?= jalaliData($user['created_at']) ?></td>
                     <td>
                         
                    
