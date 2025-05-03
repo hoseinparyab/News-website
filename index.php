@@ -21,6 +21,8 @@ require_once 'activities/Admin/Category.php';
 require_once 'activities/Admin/Post.php';
 require_once 'activities/Admin/Banner.php';
 require_once 'activities/Admin/User.php';
+require_once 'activities/Admin/Comment.php';
+
 
 
 
@@ -216,6 +218,8 @@ uri('admin/user/update/{id}', 'Admin\User', 'update', 'POST');
 uri('admin/user/permission/{id}', 'Admin\User', 'permission');
 uri('admin/user/delete/{id}', 'Admin\user', 'delete');
 
+uri('admin/comment', 'Admin\comment', 'index');
+uri('admin/comment/change-status/{id}', 'Admin\Comment', 'changeStatus');
 
 
 
