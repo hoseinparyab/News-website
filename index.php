@@ -22,6 +22,7 @@ require_once 'activities/Admin/Post.php';
 require_once 'activities/Admin/Banner.php';
 require_once 'activities/Admin/User.php';
 require_once 'activities/Admin/Comment.php';
+require_once 'activities/Admin/Menu.php';
 
 
 
@@ -218,10 +219,19 @@ uri('admin/user/update/{id}', 'Admin\User', 'update', 'POST');
 uri('admin/user/permission/{id}', 'Admin\User', 'permission');
 uri('admin/user/delete/{id}', 'Admin\user', 'delete');
 
+//Comments
 uri('admin/comment', 'Admin\comment', 'index');
 uri('admin/comment/change-status/{id}', 'Admin\Comment', 'changeStatus');
 
 
+// Menu
+
+uri('admin/menu', 'Admin\Menu', 'index');
+uri('admin/menu/create', 'Admin\Menu', 'create');
+uri('admin/menu/store', 'Admin\Menu', 'store', 'POST');
+uri('admin/menu/edit/{id}', 'Admin\Menu', 'edit');
+uri('admin/menu/update/{id}', 'Admin\Menu', 'update', 'POST');
+uri('admin/menu/delete/{id}', 'Admin\Menu', 'delete');
 
 
 echo '404 - page not found';
