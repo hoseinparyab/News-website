@@ -32,7 +32,7 @@ class Menu extends Admin{
         $db = new DataBase();
         $menu = $db->select('SELECT * FROM menus WHERE id = ?;', [$id])->fetch();
         $menus = $db->select('SELECT * FROM menus WHERE parent_id IS NULL;');
-        require_once(BASE_PATH . '/template/admin/menus /edit.php');
+        require_once(BASE_PATH . '/template/admin/menus/edit.php');
     }
 
     public function update($request, $id)
