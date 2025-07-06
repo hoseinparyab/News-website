@@ -1,6 +1,7 @@
 <?php
 
 //session start
+use Auth\Auth;
 use database\Database;
 
 session_start();
@@ -13,6 +14,17 @@ define('DB_HOST', 'localhost');
 define('DB_NAME', 'project');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
+
+
+// mail
+define('Mail_HOST','smtp.gmail.com');
+define('SMTP_AUTH',true);
+define('MAIL_USERNAME','hoseinparyab1@gmail.com');
+define('MAIL_PASSWORD','');
+define('SENDER_MAIL','hoseinparyab1@gmail.com');
+define('SENDER_NAME','وبسایت خبری');
+define('MAIL_PORT',587);
+
 
 require_once 'database/DataBase.php';
 require_once 'database/CreateDB.php';
@@ -37,7 +49,8 @@ spl_autoload_register(function($className){
     include $path . $className . '.php';
 });
 
-
+//$auth = new Auth();
+//$auth->sendMail('najinoagency@gmail.com','test','<p>this is test email with phpmailerPackage</p>');
 function jalaliData($date){
     return \Parsidev\Jalali\jdate::forge($date)->format('datetime');
 }
