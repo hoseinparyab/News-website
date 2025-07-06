@@ -257,5 +257,11 @@ uri('admin/websetting/edit/{id}', 'Admin\Websetting', 'edit');
 uri('admin/websetting/update/{id}', 'Admin\Websetting', 'update', 'POST');
 
 
+//auth
+
+//Auth
+uri('register', 'Auth\Auth', 'register');
+uri('register/store', 'Auth\Auth', 'registerStore', 'POST');
+
 
 echo '404 - page not found';
