@@ -17,7 +17,7 @@ define('DB_PASSWORD', '');
 
 
 // mail
-define('Mail_HOST','smtp.gmail.com');
+define('MAIL_HOST', 'smtp.gmail.com');
 define('SMTP_AUTH',true);
 define('MAIL_USERNAME','hoseinparyab1@gmail.com');
 define('MAIL_PASSWORD','');

@@ -2,28 +2,32 @@
 
 namespace Auth;
 
+use database\DataBase;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
 class Auth
 {
-    protected function redirect($url): void
+
+    protected function redirect($url)
     {
-        header('Location :' . trim(CURRENT_DOMAIN, '/') . '/' . trim($url, '/'));
+        header('Location: ' . trim(CURRENT_DOMAIN, '/ ') . '/' . trim($url, '/ '));
         exit;
     }
 
     protected function redirectBack()
     {
-        header('Location' . $_SERVER['HTTP_REFERER']);
-        exit();
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
     }
 
     private function hash($password)
     {
         $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+        return $hashPassword;
     }
+
     private function random()
     {
         return bin2hex(openssl_random_pseudo_bytes(32));
@@ -41,34 +45,34 @@ class Auth
 
     private function sendMail($emailAddress, $subject, $body)
     {
+
         //Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);
 
         try {
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-            $mail->CharSet = "UTF-8";                      //Enable verbose debug output
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host = Mail_HOST;                     //Set the SMTP server to send through
-            $mail->SMTPAuth = SMTP_AUTH;                                   //Enable SMTP authentication
-            $mail->Username = MAIL_USERNAME;                     //SMTP username
-            $mail->Password = MAIL_PASSWORD;                               //SMTP password
-            $mail->SMTPSecure = 'tls';            //Enable implicit TLS encryption
-            $mail->Port = MAIL_PORT;                                    //TCP port to connect to; use 587 if you have set
-            // `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output
+            $mail->CharSet = "UTF-8"; //Enable verbose debug output
+            $mail->isSMTP(); //Send using SMTP
+            $mail->Host = MAIL_HOST; //Set the SMTP server to send through
+            $mail->SMTPAuth = SMTP_AUTH; //Enable SMTP authentication
+            $mail->Username = MAIL_USERNAME; //SMTP username
+            $mail->Password = MAIL_PASSWORD; //SMTP password
+            $mail->SMTPSecure = 'tls'; //Enable implicit TLS encryption
+            $mail->Port = MAIL_PORT; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
             $mail->setFrom(SENDER_MAIL, SENDER_NAME);
-            $mail->addAddress($emailAddress);               //Name is optional
+            $mail->addAddress($emailAddress);
 
 
             //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->isHTML(true); //Set email format to HTML
             $mail->Subject = $subject;
             $mail->Body = $body;
-            $result = $mail->send();
-            echo 'Message has been sent';
-            return $result;
+
+            $mail->send();
+            return true;
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             return false;
@@ -87,20 +91,24 @@ class Auth
     {
         if(empty($request['email']) || empty($request['username']) || empty($request['password']))
         {
+            flash('register_error', 'تمامی فیلد ها اجباری میباشند');
             $this->redirectBack();
         }
         else if(strlen($request['password']) < 8)
         {
+            flash('register_error', 'رمز عبور باید حداقل ۸ کاراکتر باشد');
             $this->redirectBack();
         }
         else if(!filter_var($request['email'], FILTER_VALIDATE_EMAIL))
         {
+            flash('register_error', 'ایمیل معتبری وارد نشده است');
             $this->redirectBack();
         }
         else{
             $db = new DataBase();
-            $user = $db->select('SELECT * FROM users WHERE email = ?', $request['email'])->fetch();
+            $user = $db->select('SELECT * FROM users WHERE email = ?', [$request['email']])->fetch();
             if($user != null){
+                flash('register_error', 'کاربر از قبل در سیستم وجود دارد عزیزم');
                 $this->redirectBack();
             }
             else{
@@ -115,10 +123,12 @@ class Auth
                     $this->redirect('login');
                 }
                 else{
+                    flash('register_error', 'ارسال ایمیل با خطا مواجه شد');
                     $this->redirectBack();
                 }
 
             }
         }
     }
+
 }
