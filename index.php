@@ -262,6 +262,8 @@ uri('admin/websetting/update/{id}', 'Admin\Websetting', 'update', 'POST');
 uri('register', 'Auth\Auth', 'register');
 uri('register/store', 'Auth\Auth', 'registerStore', 'POST');
 uri('activation/{verify_token}', 'Auth\Auth', 'activation');
+uri('login', 'Auth\Auth', 'login');
+uri('check-login', 'Auth\Auth', 'checkLogin', 'POST');
 
 
 

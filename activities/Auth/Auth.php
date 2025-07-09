@@ -126,13 +126,48 @@ class Auth
     {
         $db = new Database();
         $user = $db->select("SELECT * FROM users WHERE verify_token = ? AND is_active = 0;", [$verifyToken])->fetch();
-        if($user == null)
-        {
+        if ($user == null) {
             $this->redirect('login');
-        }
-        else{
+        } else {
             $result = $db->update('users', $user['id'], ['is_active'], [1]);
             $this->redirect('login');
         }
     }
+
+    public function login()
+    {
+        require_once(BASE_PATH . '/template/auth/login.php');
+    }
+
+
+    public function checkLogin($request)
+    {
+        if(empty($request['email']) || empty($request['password']))
+        {
+            flash('login_error', 'تمامی فیلد ها الزامی میباشند');
+            $this->redirectBack();
+        }
+        else{
+            $db = new DataBase();
+            $user = $db->select("SELECT * FROm users WHERE email = ?", [$request['email']])->fetch();
+
+            if($user != null)
+            {
+                if(password_verify($request['password'], $user['password']) && $user['is_active'] == 1)
+                {
+                    $_SESSION['user'] = $user['id'];
+                    $this->redirect('admin');
+                }
+                else{
+                    flash('login_error', 'ورود انجام نشد');
+                    $this->redirectBack();
+                }
+            }
+            else{
+                flash('login_error', 'کاربری با این مشخصات یافت نشد');
+                $this->redirectBack();
+            }
+        }
+    }
+
 }
