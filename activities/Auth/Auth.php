@@ -37,8 +37,8 @@ class Auth
     {
         $message = '
         <h1>فعال سازی حساب کاربری</h1>
-        <p>'. $username .' عزیز برای فعال سازی حساب کاربری خود لطفا روی لینک زیر کلیک نمایید</p>
-        <di><a href="">فعال سازی حساب</a></di>
+        <p>' . $username . ' عزیز برای فعال سازی حساب کاربری خود لطفا روی لینک زیر کلیک نمایید</p>
+        <di><a href="' . url('activation/' . $verifyToken) . '">فعال سازی حساب</a></di>
         ';
         return $message;
     }
@@ -89,40 +89,31 @@ class Auth
 
     public function registerStore($request)
     {
-        if(empty($request['email']) || empty($request['username']) || empty($request['password']))
-        {
+        if (empty($request['email']) || empty($request['username']) || empty($request['password'])) {
             flash('register_error', 'تمامی فیلد ها اجباری میباشند');
             $this->redirectBack();
-        }
-        else if(strlen($request['password']) < 8)
-        {
+        } else if (strlen($request['password']) < 8) {
             flash('register_error', 'رمز عبور باید حداقل ۸ کاراکتر باشد');
             $this->redirectBack();
-        }
-        else if(!filter_var($request['email'], FILTER_VALIDATE_EMAIL))
-        {
+        } else if (!filter_var($request['email'], FILTER_VALIDATE_EMAIL)) {
             flash('register_error', 'ایمیل معتبری وارد نشده است');
             $this->redirectBack();
-        }
-        else{
+        } else {
             $db = new DataBase();
             $user = $db->select('SELECT * FROM users WHERE email = ?', [$request['email']])->fetch();
-            if($user != null){
+            if ($user != null) {
                 flash('register_error', 'کاربر از قبل در سیستم وجود دارد عزیزم');
                 $this->redirectBack();
-            }
-            else{
+            } else {
                 $randomToken = $this->random();
                 $activationMessage = $this->activationMessage($request['username'], $randomToken);
                 $result = $this->sendMail($request['email'], 'فعال سازی حساب کاربری', $activationMessage);
-                if($result)
-                {
+                if ($result) {
                     $request['verify_token'] = $randomToken;
                     $request['password'] = $this->hash($request['password']);
                     $db->insert('users', array_keys($request), $request);
                     $this->redirect('login');
-                }
-                else{
+                } else {
                     flash('register_error', 'ارسال ایمیل با خطا مواجه شد');
                     $this->redirectBack();
                 }
@@ -131,4 +122,17 @@ class Auth
         }
     }
 
+    public function activation($verifyToken)
+    {
+        $db = new Database();
+        $user = $db->select("SELECT * FROM users WHERE verify_token = ? AND is_active = 0;", [$verifyToken])->fetch();
+        if($user == null)
+        {
+            $this->redirect('login');
+        }
+        else{
+            $result = $db->update('users', $user['id'], ['is_active'], [1]);
+            $this->redirect('login');
+        }
+    }
 }
